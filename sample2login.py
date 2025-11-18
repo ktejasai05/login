@@ -5,12 +5,12 @@ from tkinter import messagebox, simpledialog
 users = [
     {"username": "admin", "password": "password"}
 ]
-
+# login screen
 def login_screen():
     root = tk.Tk()
     root.title("Login Screen")
     root.geometry("300x220")
-
+    # Username and Password fields
     tk.Label(root, text="Username").pack(pady=(20, 5))
     username_entry = tk.Entry(root)
     username_entry.pack()
@@ -18,13 +18,13 @@ def login_screen():
     tk.Label(root, text="Password").pack(pady=(10, 5))
     password_entry = tk.Entry(root, show='*')
     password_entry.pack()
-
+    # function to open CRUD screen
     def open_crud_screen():
         root.destroy()  # close login window
         crud_screen()
-
+    # create account window
     def create_account():
-        def save_account():
+        def save_account(): # save new account
             new_username = new_username_entry.get().strip()
             new_password = new_password_entry.get().strip()
             if not new_username or not new_password:
@@ -41,7 +41,7 @@ def login_screen():
         create_account_window = tk.Toplevel(root)
         create_account_window.title("Create New Account")
         create_account_window.geometry("300x180")
-
+        # New Username and Password fields
         tk.Label(create_account_window, text="New Username").pack(pady=(20, 5))
         new_username_entry = tk.Entry(create_account_window)
         new_username_entry.pack()
@@ -52,7 +52,7 @@ def login_screen():
 
         save_btn = tk.Button(create_account_window, text="Save", command=save_account)
         save_btn.pack(pady=20)
-
+    # login function
     def login():
         username = username_entry.get().strip()
         password = password_entry.get().strip()
@@ -61,7 +61,7 @@ def login_screen():
             open_crud_screen()
         else:
             messagebox.showerror("Login Info", "Invalid Username or Password")
-
+    # Login button and Create Account link
     login_button = tk.Button(root, text="Login", command=login)
     login_button.pack(pady=(10, 5))
 
@@ -70,7 +70,7 @@ def login_screen():
     create_account_link.bind("<Button-1>", lambda e: create_account())
 
     root.mainloop()
-
+#CRUD screen
 def crud_screen():
     crud_root = tk.Tk()
     crud_root.title("User Management (CRUD)")
@@ -78,12 +78,12 @@ def crud_screen():
 
     listbox = tk.Listbox(crud_root)
     listbox.pack(fill=tk.BOTH, expand=True)
-
+    # function to refresh user list
     def refresh_list():
         listbox.delete(0, tk.END)
         for user in users:
             listbox.insert(tk.END, f"Username: {user['username']} Password: {user['password']}")
-
+    # function to add user
     def add_user():
         username = simpledialog.askstring("Input", "Enter username:")
         if not username:
@@ -96,7 +96,7 @@ def crud_screen():
             return
         users.append({"username": username, "password": password})
         refresh_list()
-
+    # function to update user
     def update_user():
         selected = listbox.curselection()
         if not selected:
@@ -116,7 +116,7 @@ def crud_screen():
             return
         users[index] = {"username": new_username, "password": new_password}
         refresh_list()
-
+    # function to delete user
     def delete_user():
         selected = listbox.curselection()
         if not selected:
@@ -125,10 +125,10 @@ def crud_screen():
         index = selected[0]
         del users[index]
         refresh_list()
-
+    # Buttons for CRUD operations
     btn_frame = tk.Frame(crud_root)
     btn_frame.pack(fill=tk.X)
-
+    # Add, Update, Delete buttons
     add_btn = tk.Button(btn_frame, text="Add", command=add_user)
     add_btn.pack(side=tk.LEFT, fill=tk.X, expand=True)
 
@@ -140,5 +140,5 @@ def crud_screen():
 
     refresh_list()
     crud_root.mainloop()
-
+# Start the application
 login_screen()
