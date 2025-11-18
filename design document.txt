@@ -1,0 +1,101 @@
+Design Document for Python Tkinter Login and CRUD Application
+Overview
+This application is a desktop GUI program that allows users to log in using credentials, create new accounts, and manage their user accounts. It is implemented using the Tkinter library in Python.
+________________________________________
+Files
+	login.py
+________________________________________
+Architecture
+The app consists of two main windows:
+1.	Login Window: Allows user login and account creation.
+2.	CRUD Window: Allows managing (Create, Read, Update, Delete) user accounts.
+user data is stored as a list of dictionaries in memory.
+________________________________________
+Modules & Libraries
+•	tkinter: For UI elements.
+•	tkinter.messagebox: For popup messages like errors or confirmations.
+•	tkinter.simpledialog: For simple input dialogs during CRUD operations.
+________________________________________
+Global Variables
+•	users: List of dictionaries where each dictionary represents a user with keys:
+•	"username": String for username
+•	"password": String for password
+Example: users = [{"username": "admin", "password": "password"}]
+________________________________________
+Functions
+1. login_screen()
+Purpose:
+Displays the login window and handles user login and account creation.
+Variables:
+•	root: The main Tkinter window object for login.
+•	username_entry, password_entry: Entry widgets to accept login username and password.
+Methods:
+•	login(): Checks entered credentials against users.
+•	On success, opens the CRUD window and closes the login window.
+•	On failure, shows an error message.
+•	create_account(): Opens a popup window to create a new user account.
+•	Contains input fields for new username and password.
+•	Checks if username already exists.
+•	Adds new user to users on success.
+UI Elements:
+•	Labels and Entry fields for username and password.
+•	Login Button.
+•	"Create New Account" link will be there.
+________________________________________
+2. crud_screen()
+Purpose:
+Displays the CRUD window for managing the users list.
+Variables:
+•	crud_root: Main Tk window for CRUD interface.
+•	listbox: Tkinter Listbox widget showing all users and passwords.
+Methods:
+•	refresh_list(): Reloads data into the listbox from the users list.
+•	add_user(): Prompts for username and password, adds new user if username unique.
+•	update_user(): Allows editing username and password of selected user; checks uniqueness.
+•	delete_user(): Deletes selected user.
+UI Elements:
+•	Listbox showing current users.
+•	Buttons for Add, Update, Delete.
+•	Input dialogs for entering/updating user data.
+________________________________________
+Data Flow
+1.	Login Window.
+2.	If user clicks "Create New Account," account creation dialog appears → updates users.
+3.	User logs in using username/password → if matched, opens CRUD Window.
+4.	In CRUD Window, user can Add, Update, Delete users
+5.	The updated users list is used on login.
+________________________________________
+User Interaction Flow
+•	Login Attempt:
+•	Enter username and password → click Login →
+•	If valid → go to CRUD Window
+•	Otherwise → error message.
+•	Create New Account:
+•	Click "Create New Account" → enter new credentials → save → success message.
+•	In CRUD Window:
+•	View all user accounts in list.
+•	Click Add →adds new user and password.
+•	Select user, click Updateuser is updated.
+•	Select user, click Delete → user is deleted.
+________________________________________
+Variables:
+Variable Name	Type	Purpose
+users	list of dicts	Stores user accounts with usernames/passwords
+root	Tk() instance	Login window
+username_entry	Entry widget	Input for username in login window
+password_entry	Entry widget	Input for password in login window
+crud_root	Tk() instance	CRUD operations window
+listbox	Listbox	Displays users for CRUD actions
+new_username_entry	Entry widget	Input for new username during account creation
+new_password_entry	Entry widget	Input for new password during account creation
+________________________________________
+
+Functions :
+Function / Module	Responsibility	Variables
+login_screen()	GUI for login & account creation link	root, username_entry, password_entry, users
+create_account()	Sub-function within login_screen to create new users	new_username_entry, new_password_entry
+crud_screen()	GUI for performing CRUD operations on users	crud_root, listbox, users
+CRUD Methods inside crud_screen:	refresh_list(), add_user(), update_user(), delete_user()	users, listbox
+		
+		
+________________________________________
